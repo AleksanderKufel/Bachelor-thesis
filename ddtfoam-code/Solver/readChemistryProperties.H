@@ -20,14 +20,14 @@ scalar reconstructionStages(1);
 
 
 
-    word sLCorrelation("Ettner");    
+    word sLCorrelation("Ettner");
     word XiModel("transport");
+    word autoIgnitionTauModel("standard");
     dimensionedScalar XiCoef("XiCoef", dimensionSet(0, 0, 0, 0, 0, 0, 0), 0.62);
     dimensionedScalar XiShapeCoef("XiShapeCoef", dimensionSet(0, 0, 0, 0, 0, 0, 0), 1);
     dimensionedScalar uPrimeCoef("uPrimeCoef", dimensionSet(0, 0, 0, 0, 0, 0, 0), 1);
-    
+
 Switch turbulentBurning(chemistryProperties.lookup("turbulentBurning"));
-Switch autoIgnitionTauModel(chemistryProperties.lookup("autoIgnitionTauModel"));
 
     reconstructionStages = readScalar(chemistryProperties.lookup("reconstructionStages"));
     Info << "  reconstructionStages = " << reconstructionStages << endl;
@@ -35,8 +35,9 @@ Switch autoIgnitionTauModel(chemistryProperties.lookup("autoIgnitionTauModel"));
 
 dictionary tfcDict = chemistryProperties.subDict("tfcDict");
     yO2inAir = readScalar(tfcDict.lookup("yO2inAir"));
-    
+
 	sLCorrelation = word(tfcDict.lookupOrAddDefault<word>("sLCorrelation","Ettner",false,true));
+	autoIgnitionTauModel = word(chemistryProperties.lookup("autoIgnitionTauModel"));
         XiModel = word(tfcDict.lookup("XiModel"));
         XiCoef = tfcDict.lookup("XiCoef");
         XiShapeCoef = tfcDict.lookup("XiShapeCoef");
@@ -47,12 +48,12 @@ dictionary tfcDict = chemistryProperties.subDict("tfcDict");
 	else
 	  {       FatalError
 		  << args.executable() << " : unknown sLCorrelation " << sLCorrelation
-		  << abort(FatalError);  
+		  << abort(FatalError);
 	  }
         Info << "  XiModel = " << XiModel << endl;
         Info << "  XiCoef = " << XiCoef.value() << endl;
         Info << "  XiShapeCoef = " << XiShapeCoef.value() << endl;
         Info << "  uPrimeCoef = " << uPrimeCoef.value() << endl;
-	
+
 	Switch quenching(chemistryProperties.lookupOrDefault("quenching",true));
 	Info << "\nQuenching is " << quenching << endl;
