@@ -56,7 +56,7 @@
     {
         forAll(p,i)
         {
-        List<scalar> coordinates(tautableDim,0.0);
+        double coordinates[3];
             coordinates[0]=fH[i];
             coordinates[1]=pHI[i];		// old values, no thermo.update()
             coordinates[2]=THI[i];
@@ -68,7 +68,7 @@
 
         forAll(p,i)
         {
-        List<scalar> coordinates(tautableDim,0.0);
+        double coordinates[3];
             coordinates[0]=fH[i];
             coordinates[1]=pLO[i];		// old values, no thermo.update()
             coordinates[2]=TLO[i];

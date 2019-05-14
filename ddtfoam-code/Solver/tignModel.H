@@ -1,4 +1,4 @@
-{
+
 /*
  * This file was generated automatically by FCNN 0.5.1 on 2019-05-03 15:30:21
  * Exported C function name (network evaluation): export_eval
@@ -70,12 +70,12 @@ double export_eval (const double *input)
     for (; i < 12; ++i) {
         x = export_w[k++];
         for (j = 0; j < 4; ++j) x += n[j] * export_w[k++];
-        n[i] = (double)1 / ((double)1 + exp(-x));
+        n[i] = (double)1 / ((double)1 + std::exp(-x));
     }
     for (; i < 20; ++i) {
         x = export_w[k++];
         for (j = 4; j < 12; ++j) x += n[j] * export_w[k++];
-        n[i] = (double)1 / ((double)1 + exp(-x));
+        n[i] = (double)1 / ((double)1 + std::exp(-x));
     }
     for (; i < 21; ++i) {
         x = export_w[k++];
@@ -98,12 +98,12 @@ double export_eval2(const double *input)
     for (; i < 9; ++i) {
         x = export_w2[k++];
         for (j = 0; j < 3; ++j) x += n[j] * export_w2[k++];
-        n[i] = (double)1 / ((double)1 + exp(-x));
+        n[i] = (double)1 / ((double)1 + std::exp(-x));
     }
     for (; i < 10; ++i) {
         x = export_w2[k++];
         for (j = 3; j < 9; ++j) x += n[j] * export_w2[k++];
-        n[i] = (double)1 / ((double)1 + exp(-x));
+        n[i] = (double)1 / ((double)1 + std::exp(-x));
     }
     for (i = 0, j = 9; i < 1; ++i, ++j) output = n[j];
 
@@ -116,11 +116,11 @@ Foam::scalar tign_model (Foam::scalar *coordinates)
     input[0] = (coordinates[0] - 0.305344494887) / 0.172997365172;
     input[1] = (coordinates[1] - 5024677.71014) / 2935262.78171;
     input[2] = (coordinates[2] - 1643.55783841) / 506.180955637;
-    input[3] = (log(input[1]) - 15.0694925066) / 1.19340100897;
+    input[3] = (std::log(input[1]) - 15.0694925066) / 1.19340100897;
     if (export_eval2(input) >= 0.5)
-        return scalar(exp(export_eval(input)));
+        return Foam::exp(export_eval(input));
     else
         return scalar(10.0);
 }
 
-}
+
